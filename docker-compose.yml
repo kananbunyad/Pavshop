@@ -1,0 +1,68 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: root
+      POSTGRES_DB: shop
+      PROD: 1
+
+    env_file:
+      - .env
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8003:8003"
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env
+
+  celery:
+    build: 
+      context: .
+      dockerfile: celery.dockerfile
+    command: celery --app food worker --beat --scheduler django --loglevel=info
+    depends_on:
+      - redis
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    
+
+volumes:
+  postgres_data:
+
+
+
+#python -m celery -A shop worker
+#celery -A shop worker --beat --scheduler django --loglevel=info

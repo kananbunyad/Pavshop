@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static  %}
+
+
+{% block page_title %}
+<title>Profile | Pavshop</title>
+{% endblock page_title %}
+
+
+{% block css %}
+
+
+<link href="/static/css/style.css" rel="stylesheet">
+
+{% endblock css %}
+
+
+{% block content %}
+<!-- Content -->
+<div class="container">
+    <div class="row profile-info">
+        <div class="col-md-4 userprofile">
+            <div class="col-md-4 userprofile">
+                <div class="userprofile" style="
+                    {% if request.user.profile_image %}
+                        background-image: url('{% get_media_prefix %}{{ request.user.profile_image }}');
+                    {% else %}
+                        background-image: url('{% static 'images/profile_image.png' %}');
+                    {% endif %}">
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-8" >
+            <h3>{{ request.user.first_name }} {{ request.user.last_name }}</h3>
+            {% if request.user.username %}
+                <p>Username: <b>{{ request.user.username }}</b></p>
+            {% endif%}
+            {% if request.user.email %}
+                <p>Email: <b>{{ request.user.email }}</b></p>
+            {% endif%}
+            {% if request.user.date_joined %}
+                <p>Registered: {{ request.user.date_joined }}</p>
+            {% endif%}
+            {% if request.user.last_login %}
+                <p>Last Login: {{ request.user.last_login }}</p>
+            {% endif%}
+            {% if request.user.position %}
+                <p>Position: {{ request.user.position }}</p>
+            {% endif %}
+            <div class="dashboard-content">
+                <form method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column;">
+                    {% csrf_token %}
+                    <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+                    {{ form.first_name }}
+                    {{ form.first_name.errors }}
+                    <br>
+                    <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+                    {{ form.last_name }}
+                    {{ form.last_name.errors }}
+                    <br>
+                    <label for="{{ form.bio.id_for_label }}">Bio:</label>
+                    {{ form.bio }}
+                    {{ form.bio.errors }}
+                    <br>
+                    <label for="{{ form.profile_image.id_for_label }}">Profile Image:</label>
+                    {{ form.profile_image }}
+                    {{ form.profile_image.errors }}
+                    <br>
+                    
+
+                    <label for="#">CHANGE PASSWORD</label>
+
+
+                    <label for="{{ form.old_password.id_for_label }}">Old Password:</label>
+                    {{ form.old_password }}
+                    {{ form.old_password.errors }}
+                    <br>
+                    <label for="{{ form.new_password1.id_for_label }}">New Password:</label>
+                    {{ form.new_password1 }}
+                    {{ form.new_password1.errors }}
+                    <br>
+                    <label for="{{ form.new_password2.id_for_label }}">Password Confirm:</label>
+                    {{ form.new_password2 }}
+                    {{ form.new_password2.errors }}
+                    <br>
+                   
+                    <button type="submit" class="btn"> Save changes</button>
+                    <br>
+                </form>
+            </div>
+        </div>
+
+    </div>   
+    
+</div>
+
+
+{% endblock  %}
+
+
+{% block js%}
+<script>
+    document.getElementById('set-default-photo').addEventListener('click', function () {
+        // Find the profile image input element
+        var profileImageInput = document.getElementById("{{ form.profile_image.id_for_label }}");
+
+        profileImageInput.value = "default_profile.jpg";
+
+        var anchor = document.createElement("a");
+        anchor.href = "#";
+        anchor.click();
+    });
+</script>
+{% endblock js %}

@@ -1,0 +1,146 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  
+  <!--======= SUB BANNER =========-->
+  <section class="sub-bnr" data-stellar-background-ratio="0.5">
+    <div class="position-center-center">
+      <div class="container">
+        <h4>PAVSHOP blog list</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
+          Sed feugiat, tellus vel tristique posuere, diam</p>
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li class="active">BLOG</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!-- Blog List -->
+    <section class="blog-list blog-list-3 padding-top-100 padding-bottom-100">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9"> 
+            
+            <!-- Article -->
+            {% for blog in blogs %}
+            <article>
+            
+              <div class="row">
+                <div class="col-sm-5"> 
+                  <!-- Post Img --> 
+                  <img class="img-responsive" src="{% get_media_prefix %}{{ blog.cover_image }}" alt="" > </div>
+                <div class="col-sm-7"> 
+                  <!-- Tittle -->
+                  <div class="post-tittle left"> <a href="{% url 'blog:blog-detail' blog.slug  %}" class="tittle">{{ blog.title }}</a> 
+                    <!-- Post Info --> 
+                    <span><i class="primary-color icon-user"></i> {{ blog.user_id }}</span> <span><i class="primary-color icon-calendar"></i>{{ blog.created_at }}</span> <span><i class="primary-color icon-bubble"></i> {{ blog.view_count }}</span> <span><i class="primary-color icon-tag"></i> {{ blog.categories.title }}</span> </div>
+                  <!-- Post Content -->
+                  <div class="text-left">
+                    <p>{{ blog.content }}</p>
+                    <a href="#." class="red-more">READ MORE</a> </div>
+                </div>
+              </div>
+            </article>
+      
+            {% endfor %}
+            <!-- Pagination -->
+            <ul class="pagination in-center">
+              <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+            </ul>
+          </div>
+          
+          <!-- Sider Bar -->
+          <div class="col-md-3"> 
+            
+            <!-- SEARCH -->
+            <div class="search">
+              <input class="form-control" type="search" placeholder="Search">
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            <div class="shop-sidebar"> 
+              
+              <!-- Category -->
+              <h5 class="shop-tittle margin-bottom-30">category</h5>
+              
+              <ul class="shop-cate">
+                {% for category in categories %}
+                <li><a href="#."> {{category.title}} <span>({{category.blogcategory.all|length}})</span></a></li>
+               {% endfor %}
+              </ul>
+              
+              <!-- Recent Post -->
+              <h5 class="shop-tittle margin-top-60 margin-bottom-30">recent post</h5>
+              <ul class="papu-post margin-top-20">
+                {% for blog in blogs %}
+                <li class="media">
+                  <div class="media-left"> <a href="#"> <img class="media-object" src="{% get_media_prefix %}{{ blog.cover_image }}" alt=""></a> </div>
+                  <div class="media-body"> <a class="media-heading" href="#.">{{ blog.content }}</a> <span>{{ blog.created_at }}</span> </div>
+                </li>
+                {% endfor %}
+              </ul>
+              
+              <!-- TAGS -->
+              <h5 class="shop-tittle margin-top-60 margin-bottom-30">PAUPLAR TAGS</h5>
+              <ul class="shop-tags">
+                {% for tag in tags %}
+                <li><a href="#.">{{tag.title}}</a></li>
+                
+                {% endfor %}
+              </ul>
+              
+              <!-- BRAND -->
+              <h5 class="shop-tittle margin-top-60 margin-bottom-30">archives</h5>
+              <ul class="shop-cate">
+                <li><a href="#."> January 2015 </a></li>
+                <li><a href="#."> February 2015 </a></li>
+                <li><a href="#."> March 2015 </a></li>
+                <li><a href="#."> April 2015 </a></li>
+                <li><a href="#."> May 2015 </a></li>
+              </ul>
+              
+              <!-- SIDE BACR BANER -->
+              <div class="side-bnr margin-top-50"> <img class="img-responsive" src="{% static 'images/sidebar-bnr.jpg' %}" alt="">
+                <div class="position-center-center"> <span class="price"><small>$</small>299</span>
+                  <div class="bnr-text">look
+                    hot
+                    with
+                    style</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Culture BLOCK -->
+    <section class="cultur-block">
+      <ul>
+        <li> <img src="{% static 'images/cultur-img-1.jpg' %}" alt="" > </li>
+        <li> <img src="{% static 'images/cultur-img-2.jpg' %}" alt="" > </li>
+        <li> <img src="{% static 'images/cultur-img-3.jpg' %}" alt="" > </li>
+        <li> <img src="{% static 'images/cultur-img-4.jpg' %}" alt="" > </li>
+      </ul>
+      
+      <!-- Culture Text -->
+      <div class="position-center-center">
+        <div class="container">
+          <div class="col-sm-6 center-block">
+            <h4>FOLLOW US @ INSTAGRAM</h4>
+            <p>Phasellus lacinia fermentutm bibendum. Interdum et malante ipuctus non. Nulla lacinia,
+              eros vel fermentum consectetur, ris dolor in ex. </p>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ən Populyar Məhsullar</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .product { margin-bottom: 20px; }
+        .product-header { font-size: 18px; font-weight: bold; }
+        .product-description { margin-top: 5px; }
+        .product-price { margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Salam {{ user.first_name }}!</h1>
+    <p>Siz bizimlə son dəfə əlaqə qurduğunuzdan bəri bir aydan çox vaxt keçib və sizi çox özlədik! Aşağıda, sizin üçün xüsusi seçdiyimiz bu ayın ən populyar məhsullarını tapa bilərsiniz:</p>
+    
+    {% for product in product_version %}
+    <div class="product">
+        <div class="product-header">{{ product.title }}</div>
+        <div class="product-description">{{ product.description }}</div>
+        <div class="product-price">Qiymət: {{ product.price }}</div>
+       
+    </div>
+    {% endfor %}
+    
+    <p>Əgər suallarınız və ya fikirləriniz varsa, bizimlə əlaqə saxlamaqdan çəkinməyin.</p>
+    
+</body>
+</html>
